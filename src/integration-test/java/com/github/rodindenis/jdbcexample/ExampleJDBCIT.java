@@ -18,7 +18,7 @@ public class ExampleJDBCIT {
 
     @Test
     void example() throws SQLException {
-        ExampleJDBC exampleJDBC = new ExampleJDBC("jdbc:h2:mem");
+        ExampleJDBC exampleJDBC = new ExampleJDBC("jdbc:h2:target/example");
 
         assertEquals(Optional.of("VW"),exampleJDBC.selectColumn());
     }

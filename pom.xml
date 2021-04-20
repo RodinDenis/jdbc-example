@@ -181,9 +181,9 @@
                         </dependencies>
                         <configuration>
                             <driver>org.h2.Driver</driver>
-                            <url>jdbc:h2:mem:example</url>
-                            <username>sa</username>
-                            <password></password>
+                            <url>jdbc:h2:target/example</url>
+<!--                            <username>sa</username>-->
+<!--                            <password></password>-->
 <!--                            <autocommit>true</autocommit>-->
 <!--                            <skip>${maven.test.skip}</skip>-->
                         </configuration>
