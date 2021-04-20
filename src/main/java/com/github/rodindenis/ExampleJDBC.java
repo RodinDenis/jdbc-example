@@ -11,7 +11,7 @@ public class ExampleJDBC {
     }
 
     public Optional<String> selectColumn() throws SQLException {
-        try(Connection connection = getConnection1().orElseThrow(JDBCConnectionException::new)) {
+        try(Connection connection = getConnection().orElseThrow(JDBCConnectionException::new)) {
             try(Statement statement = connection.createStatement()) {
                 try(ResultSet resultSet = statement.executeQuery("select name from machine")) {
                     if (resultSet.next()) {
@@ -25,7 +25,7 @@ public class ExampleJDBC {
     }
 
     public Optional<String> selectTwoColumns() throws SQLException {
-        try(Connection connection = getConnection1().orElseThrow(JDBCConnectionException::new)) {
+        try(Connection connection = getConnection().orElseThrow(JDBCConnectionException::new)) {
             try(Statement statement = connection.createStatement()) {
                 try(ResultSet resultSet = statement.executeQuery("select name, age from animal")) {
                     if (resultSet.next()) {
@@ -38,7 +38,7 @@ public class ExampleJDBC {
         }
     }
 
-    private Optional<Connection> getConnection1() throws SQLException {
+    private Optional<Connection> getConnection() throws SQLException {
         return Optional.ofNullable(DriverManager.getConnection(url));
     }
 
