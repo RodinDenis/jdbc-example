@@ -11,28 +11,35 @@ public class ExampleJDBC {
     }
 
     public Optional<String> selectColumn() throws SQLException {
-        Connection connection = DriverManager.getConnection(url);
-        Statement statement = connection.createStatement();
-
-        ResultSet resultSet = statement.executeQuery("select name from machine");
-
-        if (resultSet.next()) {
-            return Optional.of(resultSet.getString("NAME"));
-        } else {
-            return Optional.empty();
+        try(Connection connection = getConnection1().orElseThrow(JDBCConnectionException::new)) {
+            try(Statement statement = connection.createStatement()) {
+                try(ResultSet resultSet = statement.executeQuery("select name from machine")) {
+                    if (resultSet.next()) {
+                        return Optional.of(resultSet.getString("NAME"));
+                    } else {
+                        return Optional.empty();
+                    }
+                }
+            }
         }
     }
 
     public Optional<String> selectTwoColumns() throws SQLException {
-        Connection connection = DriverManager.getConnection(url);
-        Statement statement = connection.createStatement();
-
-        ResultSet resultSet = statement.executeQuery("select name, age from animal");
-
-        if (resultSet.next()) {
-            return Optional.of(String.format("Name: %s, age: %d",resultSet.getString("NAME"),resultSet.getInt("age")));
-        } else {
-            return Optional.empty();
+        try(Connection connection = getConnection1().orElseThrow(JDBCConnectionException::new)) {
+            try(Statement statement = connection.createStatement()) {
+                try(ResultSet resultSet = statement.executeQuery("select name, age from animal")) {
+                    if (resultSet.next()) {
+                        return Optional.of(String.format("Name: %s, age: %d", resultSet.getString("NAME"), resultSet.getInt("age")));
+                    } else {
+                        return Optional.empty();
+                    }
+                }
+            }
         }
     }
+
+    private Optional<Connection> getConnection1() throws SQLException {
+        return Optional.ofNullable(DriverManager.getConnection(url));
+    }
+
 }
