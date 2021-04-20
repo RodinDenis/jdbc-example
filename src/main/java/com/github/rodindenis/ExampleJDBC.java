@@ -22,4 +22,17 @@ public class ExampleJDBC {
             return Optional.empty();
         }
     }
+
+    public Optional<String> selectTwoColumns() throws SQLException {
+        Connection connection = DriverManager.getConnection(url);
+        Statement statement = connection.createStatement();
+
+        ResultSet resultSet = statement.executeQuery("select name, age from animal");
+
+        if (resultSet.next()) {
+            return Optional.of(String.format("Name: %s, age: %d",resultSet.getString("NAME"),resultSet.getInt("age")));
+        } else {
+            return Optional.empty();
+        }
+    }
 }
